@@ -3,8 +3,9 @@ import os
 import matplotlib.pyplot as plt
 import torch
 from torch.utils.data import Dataset, DataLoader
-from model import RobustModel
+import torchvision.transforms as transforms
 
+from model import RobustModel
 
 class ImageDataset(Dataset):
     """ Image shape: 28x28x3 """
@@ -12,6 +13,7 @@ class ImageDataset(Dataset):
     def __init__(self, root_dir, fmt=':06d', extension='.png'):
         self.root_dir = root_dir
         self.fmtstr = '{' + fmt + '}' + extension
+        self.transform = transforms.ToTensor()
 
     def __len__(self):
         return len(os.listdir(self.root_dir))
@@ -23,7 +25,7 @@ class ImageDataset(Dataset):
         img_name = self.fmtstr.format(idx)
         img_path = os.path.join(self.root_dir, img_name)
         img = plt.imread(img_path)
-        data = torch.from_numpy(img)
+        data = self.transform(img)
         return data
 
 
@@ -46,15 +48,16 @@ def inference(data_loader, model):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='2022 DL Term Project #1')
-    parser.add_argument('--load-model', default='model.pt', help="Model's state_dict")
+    parser.add_argument('--load_model', default='model.pt', help="Model's state_dict")
     parser.add_argument('--dataset', default='./test/', help='image dataset directory')
-    parser.add_argument('--batch-size', default=16, help='test loader batch size')
+    parser.add_argument('--batch_size', default=16, help='test loader batch size')
 
     args = parser.parse_args()
 
     # instantiate model
+    device = torch.device('cpu')
     model = RobustModel()
-    model.load_state_dict(torch.load(args.load_model))
+    model.load_state_dict(torch.load(args.load_model, map_location=device))
 
     # load dataset in test image folder
     test_data = ImageDataset(args.dataset)
