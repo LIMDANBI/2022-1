@@ -2,7 +2,7 @@
 ## 수강 과목 
 
 ### 1. 딥러닝
-- logistic regression을 이용하여 operator 구현
+- Logistic regression을 이용하여 operator 구현
 - XOR with shallow neural network
 - CNN을 이용한 숫자 분류 (MNIST + 추가 데이터 이용)
 
