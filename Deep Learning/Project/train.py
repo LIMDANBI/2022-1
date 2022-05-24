@@ -11,7 +11,6 @@ from model import RobustModel
 
 import pandas as pd
 
-
 if __name__ == '__main__':
     
     # ---------- 파라미터 설정 ------------

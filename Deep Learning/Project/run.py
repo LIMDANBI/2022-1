@@ -28,7 +28,6 @@ class ImageDataset(Dataset):
         data = self.transform(img)
         return data
 
-
 def inference(data_loader, model):
     """ model inference """
 
@@ -44,7 +43,6 @@ def inference(data_loader, model):
             preds.extend(map(lambda t: t.item(), predicted))
 
     return preds
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='2022 DL Term Project #1')
