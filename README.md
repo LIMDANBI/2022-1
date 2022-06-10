@@ -2,10 +2,10 @@
 ## 수강 과목 
 
 ### 1. 딥러닝
-- Logistic regression을 이용하여 operator 구현
-- XOR with shallow neural network
-- CNN을 이용한 숫자 분류 (MNIST + 추가 데이터 이용)
-- Text Classification (Text categorization)
+- Assignment1: Logistic regression을 이용하여 operator 구현
+- Assignment2: XOR with shallow neural network
+- PROJECT1: CNN을 이용한 숫자 분류 (MNIST + 추가 데이터 이용) 
+- PROJECT2: Text Classification (Text categorization)
 
 ### 2. [컴퓨터 캡스톤 디자인 2](https://github.com/LIMDANBI/Capstone)
 
