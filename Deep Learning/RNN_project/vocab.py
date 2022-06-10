@@ -1,4 +1,6 @@
 from collections import Counter
+import pickle
+import os
 
 class Vocabulary:
 
@@ -42,10 +44,9 @@ class Vocabulary:
             self.wtoi[word] = idx
             self.itow[idx] = word
             idx += 1
-        
+
 
     def sentence_to_numeric(self, text):
-
         tokenized_text = self.tokenizer(text)
         numeric_text = []
         for token in tokenized_text:
@@ -57,4 +58,27 @@ class Vocabulary:
         return numeric_text
 
 
+    """
+    Save and Load Vocabulary
+    """
+
+    # Use in train
+    def save_vocabulary(self, name):
+        path = './pickles'
+        if not os.path.exists(path):
+            os.mkdir(path)
+
+        with open(f'{path}/{name}_itow.pkl', 'wb') as w:
+            pickle.dump(self.itow, w)
+        
+        with open(f'{path}/{name}_wtoi.pkl', 'wb') as w:
+            pickle.dump(self.wtoi, w)
+
+    # Use in test
+    def load_vocabulary(self, name, path):
+        with open(f'{path}/{name}_itow.pkl', 'rb') as f:
+            self.itow = pickle.load(f)
+
+        with open(f'{path}/{name}_wtoi.pkl', 'rb') as f:
+            self.wtoi = pickle.load(f)
             
