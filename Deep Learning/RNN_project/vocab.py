@@ -5,11 +5,6 @@ import os
 class Vocabulary:
 
     def __init__(self, vocab_size):
-        """
-        TODO: Change vocabulary code as you need. (e.g. tokenizer, using stopword, etc.)
-        
-        vocab_size : max source vocab size. Eg. if set to 10,000, we pick the top 10,000 most frequent words and discard others
-        """
 
         ## <PAD> -> padding, used for padding the shorter sentences in a batch to match the length of longest sentence in the batch
         ## <UNK> -> words which are not found in the vocab are replace by this token
@@ -22,6 +17,7 @@ class Vocabulary:
         return len(self.itow)
 
     def tokenizer(self, text):
+        # token = get_tokenizer('basic_english')
         return [tok.lower().strip() for tok in text.split(' ')]
 
     def build_vocabulary(self, sentences, add_unk=True):
@@ -56,11 +52,6 @@ class Vocabulary:
                 numeric_text.append(self.wtoi['<UNK>'])
 
         return numeric_text
-
-
-    """
-    Save and Load Vocabulary
-    """
 
     # Use in train
     def save_vocabulary(self, name):

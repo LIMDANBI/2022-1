@@ -28,11 +28,6 @@ class TextDataset(Dataset):
         self.sentences_vocab = Vocabulary(vocab_size)
         self.labels_vocab = Vocabulary(vocab_size)
 
-
-        """
-        Build or Load Vocabulary
-
-        """
         if mode == 'train': 
             self.sentences_vocab.build_vocabulary(self.sentences)
             self.labels_vocab.build_vocabulary(self.labels, add_unk=False)
@@ -40,7 +35,7 @@ class TextDataset(Dataset):
             self.sentences_vocab.save_vocabulary('data')
             self.labels_vocab.save_vocabulary('label')
         
-        elif mode == 'test':
+        elif mode == 'valid' or mode == 'test':
             self.sentences_vocab.load_vocabulary('data', './pickles')
             self.labels_vocab.load_vocabulary('label', './pickles')
 

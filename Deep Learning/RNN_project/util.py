@@ -1,5 +1,4 @@
-from torch.nn.utils.rnn import pad_sequence
-
+from torch.nn.utils.rnn import pad_sequence # 거변 길이 텐서 목록을 padding_value 로 채움
 
 #######################################################
 #               Collate fn
@@ -14,7 +13,6 @@ class MyCollate:
     def __init__(self, pad_idx, batch_first):
         self.pad_idx = pad_idx
         self.batch_first = batch_first
-        
     
     #__call__: a default method
     ##   First the obj is created using MyCollate(pad_idx) in data loader

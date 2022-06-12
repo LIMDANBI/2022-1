@@ -1,11 +1,9 @@
 import torch
 import torch.nn as nn
-
+from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 
 class BaseModel(nn.Module):
-    '''
-    input_size -> text vocab size
-    '''
+
     def __init__(self, input_size, output_size, embedding_dim, hidden_dim, num_layers, batch_first):
         super(BaseModel, self).__init__()
 
@@ -13,12 +11,9 @@ class BaseModel(nn.Module):
         self.batch_first = batch_first   
         self.hidden_dim = hidden_dim
 
-        """
-        TODO: Implement your own model. You can change the model architecture.
-        """
         self.embedding = nn.Embedding(input_size, embedding_dim)
-        self.rnn = nn.RNN(embedding_dim, hidden_dim, num_layers, batch_first=batch_first)
-        self.fc = nn.Linear(hidden_dim, output_size)
+        self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers, bidirectional=True, batch_first=batch_first)
+        self.fc = nn.Linear(hidden_dim*2, output_size)
 
     # the size of x in forward is (seq_length, batch_size) if batch_first=False
     def forward(self, x):
@@ -28,10 +23,8 @@ class BaseModel(nn.Module):
         h_0 = torch.zeros(self.num_layers, batch_size, self.hidden_dim)
 
         embedding = self.embedding(x)
-
-        outputs, hidden = self.rnn(embedding, None)  # outputs.shape -> (sequence length, batch size, hidden size)
-
+        outputs, hidden = self.lstm(embedding, None) 
         outputs = outputs[:, -1, :] if self.batch_first else outputs[-1, :, :]
         output = self.fc(outputs)
-        
+
         return output, hidden
